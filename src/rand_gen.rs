@@ -221,7 +221,8 @@ where
     fn calculate_next(&mut self) -> BigUint {
         let ele_j: BigUint = self.states[self.states.len() - self.ele_j].clone();
         let ele_k: BigUint = self.states.remove(0);
-        self.states.push((self.operation)(ele_j, ele_k) % &self.mod_factor);
+        self.states
+            .push((self.operation)(ele_j, ele_k) % &self.mod_factor);
         self.value()
     }
 
