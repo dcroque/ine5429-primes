@@ -1,0 +1,31 @@
+name: primetool
+version: "0.1.0"
+author: Matheus D. C. Roque <matheusdcroque@gmail.com>
+about: Use this application to generate random numbers or find prime numbers 
+args:
+    - rng:
+        short: r
+        long: rng
+        about: Generate random numbers
+    - prime:
+        short: p
+        long: prime
+        about: Generate prime numbers
+    - size:
+        short: s
+        long: size
+        value_name: SIZE
+        about: Number of bits for the numbers to generate
+        takes_value: true
+    - quantity:
+        short: n
+        long: number
+        value_name: N
+        about: How many numbers will be generated
+        takes_value: true
+    - method:
+        short: m
+        long: method
+        value_name: METHOD
+        about: Which method to be used; m for mlcg/miller-rabin or f for fibonacci/fermat
+        takes_value: true
