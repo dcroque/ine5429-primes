@@ -12,8 +12,8 @@ args:
         long: prime
         about: Generate prime numbers
     - size:
-        short: s
-        long: size
+        short: b
+        long: bits
         value_name: SIZE
         about: Number of bits for the numbers to generate
         takes_value: true
@@ -28,4 +28,10 @@ args:
         long: method
         value_name: METHOD
         about: Which method to be used; m for mlcg/miller-rabin or f for fibonacci/fermat
+        takes_value: true
+    - seed:
+        short: s
+        long: seed
+        value_name: SEED
+        about: If set will be used as seed for RNG, else will the seed is set by system time
         takes_value: true

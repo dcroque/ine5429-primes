@@ -1,8 +1,10 @@
 use std::process::exit;
+use std::time::{SystemTime, UNIX_EPOCH};
 
 use clap::{App, load_yaml};
 use env_logger::Env;
 use log::{error, info, warn};
+use num_bigint::{BigUint, ToBigUint};
 
 /// Estrutura contendo os argumentos já tratados e testados
 pub struct ParsedArgs {
@@ -14,6 +16,8 @@ pub struct ParsedArgs {
     pub method: bool,
     /// Quantidade de números para gerar
     pub n: u64,
+    /// Semente para todas as gerações aleatórias
+    pub seed: BigUint,
 }
 
 /// Inicialiaza o logging, recebe os argumentos de execução e testa se todos estão corretos
@@ -26,7 +30,8 @@ pub fn init() -> ParsedArgs {
         op: true, 
         size: 256, 
         method: true, 
-        n: 1, 
+        n: 1,
+        seed: BigUint::default() 
     };
 
     let gen_flags = (args.is_present("rng"), args.is_present("prime"));
@@ -103,6 +108,33 @@ pub fn init() -> ParsedArgs {
             }
         },
         None => warn!("No number of operations given: default is 1")
+    }
+
+    match args.is_present("seed") {
+        true => {
+            match args.value_of("seed") {
+                Some(val) => {
+                    match  val.parse::<BigUint>() {
+                        Ok(num) => {
+                            info!("Seed successfully pasred! Value: {}", num);
+                            parsedargs.seed = num;
+                        },
+                        Err(_) => error!("Error trying to parse seed value")
+                    }
+                },
+                None => error!("Seed flag is used but no value is given")
+            }
+        },
+        false => {
+            parsedargs.seed =
+            SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_millis()
+            .to_biguint()
+            .unwrap();
+            warn!("No seed given, random used instead! Value: {}", parsedargs.seed);
+        }
     }
 
     parsedargs
