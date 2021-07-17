@@ -78,6 +78,12 @@ impl Mlcg {
         }
     }
 
+    /// Constrói um novo MLCG com valores padronizados para modulo e multiplicador, semente = _s_ e tamanho de _size_ bits.
+    pub fn new_std(size: u64, s: &BigUint) -> Mlcg {
+        //TODO: Achar raizes primitivas de 2^4253-1, como candidato a bom argumento de multiplicador
+        Mlcg::new_mersene_from_seed(16807.to_biguint().unwrap(), 4253, size, s)
+    }
+
     /// Retorna o último valor pseudo aleatório gerado pela estrutura.
     pub fn value(&self) -> BigUint {
         self.state.clone()
@@ -181,6 +187,11 @@ where
         temp
     }
 
+    pub fn new_std(size: u64, s: &BigUint, op: T) -> Self {
+        let lf_mod = 2.to_biguint().unwrap().pow(4253);
+        LaggedFibonacci::new_from_seed(Vec::new(), 418, 1279, lf_mod, op, size, s)
+    }
+
     /// Checa e corrige problemas referentes aos valores iniciais fornecidos para a inicialização da estrutura
     fn check_initialization(&mut self) {
         let j_k_pair = (self.ele_j, self.ele_k);
@@ -191,11 +202,11 @@ where
 
                 self.ele_j = self.ele_k;
                 self.ele_k = temp;
-            },
+            }
             (j, k) if j == k => {
                 self.ele_j -= 1;
-            },
-            (_, _) => ()
+            }
+            (_, _) => (),
         }
 
         let k_len_pair = (self.ele_k, self.states.len());
@@ -203,7 +214,7 @@ where
         match k_len_pair {
             (k, l) if l > k => {
                 self.states.truncate(self.ele_k);
-            },
+            }
             (k, l) if l < k => {
                 let mut temp = Mlcg::new_mersene_from_seed(
                     16087.to_biguint().unwrap(),
@@ -214,8 +225,8 @@ where
                 while self.states.len() < self.ele_k {
                     self.states.insert(0, temp.rand() | 1.to_biguint().unwrap())
                 }
-            },
-            (_, _) => ()
+            }
+            (_, _) => (),
         }
     }
 
