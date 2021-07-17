@@ -13,12 +13,12 @@ pub struct Mlcg {
     /// Valor pelo qual é realizada a divisão modular na geração do próximo valor.
     mod_factor: BigUint,
     /// Tamanho dos valores gerados
-    size: u32,
+    size: u64,
 }
 
 impl Mlcg {
     /// Constrói um novo MLCG com multiplicador = _mu_, modulo = _mo_, semente gerada com base no horário local e tamanho de _size_ bits.
-    pub fn new(mu: BigUint, mo: BigUint, size: u32) -> Self {
+    pub fn new(mu: BigUint, mo: BigUint, size: u64) -> Self {
         let seed: BigUint = SystemTime::now()
             .duration_since(UNIX_EPOCH)
             .unwrap()
@@ -36,7 +36,7 @@ impl Mlcg {
     }
 
     /// Constrói um novo MLCG com multiplicador = _mu_, modulo = _mo_, semente = _s_ e tamanho de _size_ bits.
-    pub fn new_from_seed(mu: BigUint, mo: BigUint, size: u32, s: BigUint) -> Self {
+    pub fn new_from_seed(mu: BigUint, mo: BigUint, size: u64, s: BigUint) -> Self {
         Mlcg {
             state: Mlcg::warm_up(&s, &mu, &mo),
             seed: s,
@@ -47,7 +47,7 @@ impl Mlcg {
     }
 
     /// Constrói um novo MLCG com multiplicador = _mu_, modulo = 2^_mer_-1, semente gerada com base no horário local e tamanho de _size_ bits.
-    pub fn new_mersene(mu: BigUint, mer: u32, size: u32) -> Self {
+    pub fn new_mersene(mu: BigUint, mer: u32, size: u64) -> Self {
         let seed: BigUint = SystemTime::now()
             .duration_since(UNIX_EPOCH)
             .unwrap()
@@ -66,7 +66,7 @@ impl Mlcg {
     }
 
     /// Constrói um novo MLCG com multiplicador = _mu_, modulo = 2^_mer_-1, semente = _s_ e tamanho de _size_ bits.
-    pub fn new_mersene_from_seed(mu: BigUint, mer: u32, size: u32, s: BigUint) -> Self {
+    pub fn new_mersene_from_seed(mu: BigUint, mer: u32, size: u64, s: BigUint) -> Self {
         let mo = BigUint::pow(&2.to_biguint().unwrap(), mer) - 1.to_biguint().unwrap();
 
         Mlcg {
@@ -129,7 +129,7 @@ where
     /// Valor pelo qual é realizada a divisão modular na geração do próximo valor.
     mod_factor: BigUint,
     /// Tamanho dos valores gerados
-    size: u32,
+    size: u64,
 }
 
 impl<T> LaggedFibonacci<T>
@@ -137,7 +137,7 @@ where
     T: Fn(BigUint, BigUint) -> BigUint,
 {
     /// Constrói um novo Lagged-Fibonacci RNG com módulo _mo_ que realiza a operação _op_ entre os elementos n-_j_ e n-_k_, com lista inicial de elementos _elements_.
-    pub fn new(elements: Vec<BigUint>, j: u16, k: u16, mo: BigUint, op: T, size: u32) -> Self {
+    pub fn new(elements: Vec<BigUint>, j: u16, k: u16, mo: BigUint, op: T, size: u64) -> Self {
         let seed: BigUint = SystemTime::now()
             .duration_since(UNIX_EPOCH)
             .unwrap()
@@ -165,7 +165,7 @@ where
         k: u16,
         mo: BigUint,
         op: T,
-        size: u32,
+        size: u64,
         s: BigUint,
     ) -> Self {
         let mut temp = LaggedFibonacci {
