@@ -1,4 +1,4 @@
-use log::{info};
+use log::info;
 
 use ine5429_primes::environment;
 
@@ -11,7 +11,7 @@ fn main() {
         // Gerar números aleatórios
         true => {
             info!("Stuff")
-        },
+        }
         // Gerar primos
         false => {
             info!("other sutff")

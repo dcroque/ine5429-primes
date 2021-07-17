@@ -36,10 +36,10 @@ impl Mlcg {
     }
 
     /// Constrói um novo MLCG com multiplicador = _mu_, modulo = _mo_, semente = _s_ e tamanho de _size_ bits.
-    pub fn new_from_seed(mu: BigUint, mo: BigUint, size: u64, s: BigUint) -> Self {
+    pub fn new_from_seed(mu: BigUint, mo: BigUint, size: u64, s: &BigUint) -> Self {
         Mlcg {
             state: Mlcg::warm_up(&s, &mu, &mo),
-            seed: s,
+            seed: s.clone(),
             mult_factor: mu,
             mod_factor: mo,
             size,
@@ -66,12 +66,12 @@ impl Mlcg {
     }
 
     /// Constrói um novo MLCG com multiplicador = _mu_, modulo = 2^_mer_-1, semente = _s_ e tamanho de _size_ bits.
-    pub fn new_mersene_from_seed(mu: BigUint, mer: u32, size: u64, s: BigUint) -> Self {
+    pub fn new_mersene_from_seed(mu: BigUint, mer: u32, size: u64, s: &BigUint) -> Self {
         let mo = BigUint::pow(&2.to_biguint().unwrap(), mer) - 1.to_biguint().unwrap();
 
         Mlcg {
             state: Mlcg::warm_up(&s, &mu, &mo),
-            seed: s,
+            seed: s.clone(),
             mult_factor: mu,
             mod_factor: mo,
             size,
@@ -166,11 +166,11 @@ where
         mo: BigUint,
         op: T,
         size: u64,
-        s: BigUint,
+        s: &BigUint,
     ) -> Self {
         let mut temp = LaggedFibonacci {
             operation: op,
-            seed: s,
+            seed: s.clone(),
             states: elements,
             ele_j: j.into(),
             ele_k: k.into(),
@@ -183,27 +183,39 @@ where
 
     /// Checa e corrige problemas referentes aos valores iniciais fornecidos para a inicialização da estrutura
     fn check_initialization(&mut self) {
-        if self.ele_j > self.ele_k {
-            let temp = self.ele_j;
+        let j_k_pair = (self.ele_j, self.ele_k);
 
-            self.ele_j = self.ele_k;
-            self.ele_k = temp;
-        } else if self.ele_j == self.ele_k {
-            self.ele_j -= 1;
+        match j_k_pair {
+            (j, k) if j > k => {
+                let temp = self.ele_j;
+
+                self.ele_j = self.ele_k;
+                self.ele_k = temp;
+            },
+            (j, k) if j == k => {
+                self.ele_j -= 1;
+            },
+            (_, _) => ()
         }
 
-        if self.states.len() > self.ele_k {
-            self.states.truncate(self.ele_k);
-        } else if self.states.len() < self.ele_k {
-            let mut temp = Mlcg::new_mersene_from_seed(
-                16087.to_biguint().unwrap(),
-                31,
-                self.size,
-                self.seed(),
-            );
-            while self.states.len() < self.ele_k {
-                self.states.insert(0, temp.rand() | 1.to_biguint().unwrap())
-            }
+        let k_len_pair = (self.ele_k, self.states.len());
+
+        match k_len_pair {
+            (k, l) if l > k => {
+                self.states.truncate(self.ele_k);
+            },
+            (k, l) if l < k => {
+                let mut temp = Mlcg::new_mersene_from_seed(
+                    16087.to_biguint().unwrap(),
+                    31,
+                    self.size,
+                    self.seed(),
+                );
+                while self.states.len() < self.ele_k {
+                    self.states.insert(0, temp.rand() | 1.to_biguint().unwrap())
+                }
+            },
+            (_, _) => ()
         }
     }
 
@@ -213,8 +225,8 @@ where
     }
 
     /// Retorna a semente da estrutura.
-    pub fn seed(&self) -> BigUint {
-        self.seed.clone()
+    pub fn seed(&self) -> &BigUint {
+        &self.seed
     }
 
     /// Retorna o pŕoximo valor pseudo aleatório gerado pela estrutura.
