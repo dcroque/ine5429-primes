@@ -1,6 +1,7 @@
-use num_bigint::{BigUint, ToBigUint};
 use std::ops::{BitAnd, BitOr};
 use std::time::{SystemTime, UNIX_EPOCH};
+
+use num_bigint::{BigUint, ToBigUint};
 
 /// Multiplicative linear congruential generator, também conhecido como Park-Miller RNG. Calcula novos valores por meio da fórmula s = mu*s % mo, sendo _s_ o ultimo valor gerado (ou inicialmente a semente), _mu_ um multiplicador e _mo_ o modulo do gerador. Recomenda-se que _mu_ e _mo_ sejam pelo menos coprimos.
 pub struct Mlcg {
@@ -218,7 +219,7 @@ where
             (k, l) if l < k => {
                 let mut temp = Mlcg::new_mersene_from_seed(
                     16087.to_biguint().unwrap(),
-                    31,
+                    self.size as u32,
                     self.size,
                     self.seed(),
                 );

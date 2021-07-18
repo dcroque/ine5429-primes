@@ -70,7 +70,7 @@ fn main() {
                     }
                     let elapsed = now.elapsed().as_secs_f64();
                     info!(
-                        "Total time for generating {} numbers: {:.4}s ({:.4}s/number avg)",
+                        "Total time for finding {} primes: {:.4}s ({:.4}s/number avg)",
                         args.n,
                         elapsed,
                         elapsed / args.n as f64
@@ -83,7 +83,7 @@ fn main() {
                     }
                     let elapsed = now.elapsed().as_secs_f64();
                     info!(
-                        "Total time for generating {} numbers: {:.4}s ({:.4}s/number avg)",
+                        "Total time for finding {} primes: {:.4}s ({:.4}s/number avg)",
                         args.n,
                         elapsed,
                         elapsed / args.n as f64
