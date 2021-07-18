@@ -190,7 +190,7 @@ where
 
     pub fn new_std(size: u64, s: &BigUint, op: T) -> Self {
         let lf_mod = 2.to_biguint().unwrap().pow(4253);
-        LaggedFibonacci::new_from_seed(Vec::new(), 418, 1279, lf_mod, op, size, s)
+        LaggedFibonacci::new_from_seed(Vec::new(), 7, 10, lf_mod, op, size, s)
     }
 
     /// Checa e corrige problemas referentes aos valores iniciais fornecidos para a inicialização da estrutura
