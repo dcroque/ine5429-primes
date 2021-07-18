@@ -29,7 +29,7 @@ pub fn find_fermat(size: u64, seed: &BigUint) -> BigUint {
 }
 
 pub fn find_miller_rabin(size: u64, seed: &BigUint) -> BigUint {
-    info!("Finding prime with {} bits with Fermat method", size);
+    info!("Finding prime with {} bits with Miller_rabin method", size);
     let now = Instant::now();
     let mut counter = 0;
     let mut mlcg_gen: Mlcg = Mlcg::new_std(size, seed);
