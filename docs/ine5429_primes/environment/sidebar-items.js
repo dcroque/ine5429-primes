@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["init","Inicialiaza o logging, recebe os argumentos de execução e testa se todos estão corretos"]],"struct":[["ParsedArgs","Estrutura contendo os argumentos já tratados e testados"]]});

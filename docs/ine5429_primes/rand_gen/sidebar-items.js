@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["LaggedFibonacci",""],["Mlcg","Multiplicative linear congruential generator, também conhecido como Park-Miller RNG. Calcula novos valores por meio da fórmula s = mu*s % mo, sendo s o ultimo valor gerado (ou inicialmente a semente), mu um multiplicador e mo o modulo do gerador. Recomenda-se que mu e mo sejam pelo menos coprimos."]]});

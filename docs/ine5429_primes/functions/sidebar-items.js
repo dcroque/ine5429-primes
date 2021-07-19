@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["find_fermat","Acha um provável número primo pelo teste de Fermat com o tamanho indicado com baseado na semente fornecida"],["find_miller_rabin","Acha um provável número primo pelo teste de Miller-Rabin com o tamanho indicado com baseado na semente fornecida"]]});

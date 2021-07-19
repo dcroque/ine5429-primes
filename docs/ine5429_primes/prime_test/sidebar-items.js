@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["fermat_tester","Aplica a checagem de Fermat para determinar se o numero é primo"],["miller_rabin_tester","Aplica a checagem de Miller-Rabin para determinar se o numero é primo"]]});
