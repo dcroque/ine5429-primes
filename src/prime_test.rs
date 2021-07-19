@@ -7,6 +7,7 @@ use crate::rand_gen::Mlcg;
 /// Aplica a checagem de Miller-Rabin para determinar se o numero é primo
 pub fn miller_rabin_tester(num: &BigUint, seed: &BigUint) -> bool {
     let mut gen = Mlcg::new_mersene_from_seed(16807.to_biguint().unwrap(), 31, 32, seed);
+    // TODO: Paralelizar as checagens
     for _ in 0..20 {
         if !miller_rabin_witness(num, gen.rand()) {
             return false;
@@ -49,6 +50,7 @@ fn miller_rabin_witness(num: &BigUint, wit: BigUint) -> bool {
 /// Aplica a checagem de Fermat para determinar se o numero é primo
 pub fn fermat_tester(num: &BigUint, seed: &BigUint) -> bool {
     let mut gen = Mlcg::new_mersene_from_seed(16807.to_biguint().unwrap(), 31, 32, seed);
+    // TODO: Paralelizar as checagens
     for _ in 0..20 {
         if !fermat_witness(num, gen.rand()) {
             return false;

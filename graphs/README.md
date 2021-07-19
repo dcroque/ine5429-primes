@@ -1,6 +1,6 @@
 # Como ler esses gráficos
 
-Os gráficos estão nomeados para indicar os parâmetros de execução na forma de M_N_T_S, sendo:
+Os gráficos estão nomeados para indicar os parâmetros de execução na forma de M_N_T_S.txt, sendo:
 
 - M: Método utilizado
   - mlcg: Multiplicative Linear Congruential Generator

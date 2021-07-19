@@ -18,8 +18,8 @@ fn main() {
                     let now = Instant::now();
                     let mut mlcg_gen = Mlcg::new_std(args.size, &args.seed);
                     info!(
-                        "MLCG initialization time: {:.4}s",
-                        now.elapsed().as_secs_f64()
+                        "MLCG initialization time: {:.4}ms",
+                        now.elapsed().as_secs_f64() * 1000 as f64
                     );
                     for i in 0..args.n {
                         info!("{}º: {}", i+1, mlcg_gen.rand());
@@ -38,8 +38,8 @@ fn main() {
                     let mut lf_gen =
                         LaggedFibonacci::new_std(args.size, &args.seed, std::ops::Mul::mul);
                     info!(
-                        "Lagged Fibonacci initialization time: {:.4}s",
-                        now.elapsed().as_secs_f64()
+                        "Lagged Fibonacci initialization time: {:.4}ms",
+                        now.elapsed().as_secs_f64() * 1000 as f64
                     );
                     for i in 0..args.n {
                         info!("{}º: {}", i+1, lf_gen.rand());
@@ -59,8 +59,8 @@ fn main() {
             let now = Instant::now();
             let mut seed_gen = Mlcg::new_std(512, &args.seed);
             info!(
-                "MLCG for seed generation initialization time: {:.4}s",
-                now.elapsed().as_secs_f64()
+                "MLCG for seed generation initialization time: {:.4}ms",
+                now.elapsed().as_secs_f64() * 1000 as f64
             );
             match args.method {
                 // Miller-Rabin

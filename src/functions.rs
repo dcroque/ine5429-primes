@@ -6,6 +6,7 @@ use num_bigint::BigUint;
 use crate::prime_test::*;
 use crate::rand_gen::*;
 
+/// Acha um provável número primo pelo teste de Fermat com o tamanho indicado com baseado na semente fornecida
 pub fn find_fermat(size: u64, seed: &BigUint) -> BigUint {
     info!("Finding prime with {} bits with Fermat method", size);
     let now = Instant::now();
@@ -28,6 +29,7 @@ pub fn find_fermat(size: u64, seed: &BigUint) -> BigUint {
     }
 }
 
+/// Acha um provável número primo pelo teste de Miller-Rabin com o tamanho indicado com baseado na semente fornecida
 pub fn find_miller_rabin(size: u64, seed: &BigUint) -> BigUint {
     info!("Finding prime with {} bits with Miller_rabin method", size);
     let now = Instant::now();
