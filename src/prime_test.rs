@@ -17,12 +17,12 @@ pub fn miller_rabin_tester(num: &BigUint, seed: &BigUint) -> bool {
 
 /// Checagem de Miller-Rabin para determinar se o número é um forte candidato a primo (75%)
 fn miller_rabin_witness(num: &BigUint, wit: BigUint) -> bool {
-    let mut s = 0;
-    let mut d = &num.clone() - BigUint::new(vec![1]);
-
     if basic_non_prime_check(&num) {
         return false;
     }
+    
+    let mut s = 0;
+    let mut d = &num.clone() - BigUint::new(vec![1]);
 
     while &d & BigUint::new(vec![1]) == BigUint::default() {
         s += 1;
@@ -59,6 +59,10 @@ pub fn fermat_tester(num: &BigUint, seed: &BigUint) -> bool {
 
 /// Checagem de Fermat para determinar se o número é um forte candidato a primo
 fn fermat_witness(num: &BigUint, wit: BigUint) -> bool {
+    if basic_non_prime_check(&num) {
+        return false;
+    }
+
     wit.modpow(&(num - BigUint::new(vec![1])), num) == BigUint::new(vec![1])
 }
 
