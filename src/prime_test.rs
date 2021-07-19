@@ -49,7 +49,7 @@ fn miller_rabin_witness(num: &BigUint, wit: BigUint) -> bool {
 /// Aplica a checagem de Fermat para determinar se o numero é primo
 pub fn fermat_tester(num: &BigUint, seed: &BigUint) -> bool {
     let mut gen = Mlcg::new_mersene_from_seed(16807.to_biguint().unwrap(), 31, 32, seed);
-    for _ in 0..8 {
+    for _ in 0..20 {
         if !fermat_witness(num, gen.rand()) {
             return false;
         }
