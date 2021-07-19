@@ -22,4 +22,6 @@ O projeto possui algumas flags de execução, que você pode conferir com a flag
 
 ## O que mais tem aqui?
 
+Você pode conferir as documentações de estruturas e funções no seguinte [link](https://dcroque.github.io/ine5429-primes/docs/ine5429_primes/index.html).
+
 Na pasta [graphs](https://github.com/dcroque/ine5429-primes/tree/main/graphs) existem alguns dados gerados pelo [flamegraph](https://github.com/flamegraph-rs/flamegraph) utilizados para a ánalise de gargalos da aplicação e na pasta [primes](https://github.com/dcroque/ine5429-primes/tree/main/primes) existem alguns arquivos com a geração de números primos de diferentes tamanhos, com o tempo de cada execução.
